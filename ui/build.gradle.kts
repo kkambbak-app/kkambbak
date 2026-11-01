@@ -28,4 +28,5 @@ dependencies {
     api("androidx.compose.ui:ui-tooling-preview")
     implementation("com.google.zxing:core:3.5.3")
     testImplementation("junit:junit:4.13.2")
+    testImplementation(project(":tools:snapshot-io"))
 }

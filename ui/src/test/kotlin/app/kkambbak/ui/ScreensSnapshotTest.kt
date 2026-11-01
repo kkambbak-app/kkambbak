@@ -19,6 +19,8 @@ class ScreensSnapshotTest {
             density = Density.HIGH, orientation = ScreenOrientation.LANDSCAPE, softButtons = false,
         ),
         theme = "android:Theme.Material.NoActionBar",
+        useDeviceResolution = true,
+        snapshotHandler = app.kkambbak.tools.FullResHandler(java.io.File("build/screens")),
         maxPercentDifference = 0.1,
     )
 

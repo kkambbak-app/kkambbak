@@ -17,4 +17,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "kkambbak"
-include(":core", ":ui", ":app")
+include(":core", ":ui", ":app", ":tools:snapshot-io")

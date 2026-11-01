@@ -17,7 +17,9 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -57,7 +59,7 @@ private fun ParkedScreen(state: UiState, onAction: (UiAction) -> Unit) {
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val wide = maxWidth > 900.dp
         Column(Modifier.fillMaxSize().padding(horizontal = 24.dp, vertical = 18.dp)) {
-            TopBar(state, onAction)
+            TopBar(state, wide, onAction)
             Spacer(Modifier.height(14.dp))
             if (wide) {
                 Row(Modifier.fillMaxSize()) {
@@ -84,26 +86,30 @@ private fun TabContent(state: UiState, wide: Boolean, onAction: (UiAction) -> Un
 }
 
 @Composable
-private fun TopBar(state: UiState, onAction: (UiAction) -> Unit) {
+private fun TopBar(state: UiState, wide: Boolean, onAction: (UiAction) -> Unit) {
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         SignalMark(24.dp, both = true)
         Spacer(Modifier.width(12.dp))
-        Text("깜빡", style = K.h2, color = K.c.text)
+        Text("깜빡", style = K.h2, color = K.c.text, maxLines = 1)
         Spacer(Modifier.width(14.dp))
-        Text("깜빡했다면, 차가 기억합니다", style = K.small, color = K.c.text2, modifier = Modifier.weight(1f))
+        if (wide) Text("깜빡했다면, 차가 기억합니다", style = K.small, color = K.c.text2, maxLines = 1, modifier = Modifier.weight(1f))
+        else Spacer(Modifier.weight(1f))
         if (state.demoProfile) {
-            Text("시연", style = K.tiny, color = K.c.amber)
-            Spacer(Modifier.width(8.dp))
-            DemoChip("출근길 ▶", primary = true) { onAction(UiAction.StartDemoDrive) }
-            Spacer(Modifier.width(6.dp))
-            DemoChip("완벽한 퇴근길 ▶") { onAction(UiAction.StartPerfectDemo) }
-            Spacer(Modifier.width(6.dp))
-            DemoChip("사고 상황 ▶") { onAction(UiAction.StartCrashDemo) }
-            Spacer(Modifier.width(14.dp))
+            Row(Modifier.horizontalScroll(rememberScrollState()), verticalAlignment = Alignment.CenterVertically) {
+                if (wide) { Text("시연", style = K.tiny, color = K.c.amber); Spacer(Modifier.width(8.dp)) }
+                DemoChip("출근길 ▶", primary = true) { onAction(UiAction.StartDemoDrive) }
+                Spacer(Modifier.width(6.dp))
+                DemoChip(if (wide) "완벽한 퇴근길 ▶" else "퇴근길 ▶") { onAction(UiAction.StartPerfectDemo) }
+                Spacer(Modifier.width(6.dp))
+                DemoChip(if (wide) "사고 상황 ▶" else "사고 ▶") { onAction(UiAction.StartCrashDemo) }
+            }
+            Spacer(Modifier.width(if (wide) 14.dp else 8.dp))
         }
-        Pill(state.profileName, K.c.text2)
-        Spacer(Modifier.width(8.dp))
-        Pill("P · 주차 중", K.c.good)
+        if (wide) {
+            Pill(state.profileName, K.c.text2)
+            Spacer(Modifier.width(8.dp))
+            Pill("P · 주차 중", K.c.good)
+        }
     }
 }
 
