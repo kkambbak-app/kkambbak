@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 깜빡 아이콘: 바깥을 향한 좌우 방향지시등 화살표 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#FFB020"
+        android:pathData="M26,54 L41,40 L41,47 L51,47 L51,61 L41,61 L41,68 Z" />
+    <path android:fillColor="#FFB020"
+        android:pathData="M82,54 L67,40 L67,47 L57,47 L57,61 L67,61 L67,68 Z" />
+</vector>
