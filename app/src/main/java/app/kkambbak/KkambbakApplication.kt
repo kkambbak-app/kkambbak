@@ -2,7 +2,7 @@ package app.kkambbak
 
 import android.app.Application
 
-class KkambbakApplication : Application() {
+open class KkambbakApplication : Application() {
     lateinit var controller: Controller
         private set
 

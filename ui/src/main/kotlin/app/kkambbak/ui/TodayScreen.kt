@@ -74,7 +74,12 @@ fun TodayScreen(state: UiState, wide: Boolean, onAction: (UiAction) -> Unit) {
             }
             Spacer(Modifier.height(8.dp))
             if (rs.isEmpty()) {
-                Text("아직 기록이 없어요. 운전하면 내비 안내 회전마다 자동으로 기록돼요.", style = K.body, color = K.c.text2)
+                Text("아직 오늘 기록이 없어요. 운전하면 내비 안내 회전마다 자동으로 기록돼요.", style = K.body, color = K.c.text2)
+                if (!state.demoProfile) {
+                    Spacer(Modifier.height(16.dp))
+                    SmallButton("시연 모드로 둘러보기", primary = true) { onAction(UiAction.SelectProfile("시연 운전자")) }
+                    Text("가상 주행 기록과 시연 주행으로 모든 화면을 볼 수 있어요. 실제 기록과 섞이지 않아요.", style = K.small, color = K.c.text3, modifier = Modifier.padding(top = 8.dp))
+                }
             } else {
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     items(rs.reversed()) { r -> ResultRow(r) }

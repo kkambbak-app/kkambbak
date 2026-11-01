@@ -218,17 +218,12 @@ class Controller(private val context: Context) : DriveSession.Listener {
         session = newSession()
         voice.altVoice = settings.altVoice
         update { copy(briefing = null, selectedCrashId = null, celebration = false) }
+        if (id == "demo") seedDemoHistory()
         reload()
     }
 
     private fun startDemo(title: String, events: List<DriveEvent>, speed: Double) {
         switchProfile("demo")
-        if (store.isEmpty("demo")) {
-            val (hist, trips) = DemoScript.history(System.currentTimeMillis())
-            hist.forEach { store.appendResult("demo", it) }
-            trips.forEach { store.appendTrip("demo", it) }
-            reload()
-        }
         session = newSession()
         demoLog.clear()
         demoTitle = title
@@ -239,6 +234,14 @@ class Controller(private val context: Context) : DriveSession.Listener {
             publish()
         })
         publish()
+    }
+
+    /** 시연 운전자에 지난 6일치 가상 기록을 넣는다(한 번만). */
+    private fun seedDemoHistory() {
+        if (!store.isEmpty("demo")) return
+        val (hist, histTrips) = DemoScript.history(System.currentTimeMillis())
+        hist.forEach { store.appendResult("demo", it) }
+        histTrips.forEach { store.appendTrip("demo", it) }
     }
 
     private fun recordCrash(trigger: CrashTrigger) {

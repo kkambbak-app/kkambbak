@@ -53,6 +53,8 @@ android {
     // AAOS CarUxRestrictions(주행 제한 상태)를 쓰기 위한 플랫폼 라이브러리
     useLibrary("android.car")
 
+    testOptions { unitTests.isIncludeAndroidResources = true }
+
     packaging {
         resources.excludes += setOf("META-INF/AL2.0", "META-INF/LGPL2.1", "META-INF/*.kotlin_module")
     }
@@ -74,4 +76,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
 
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.robolectric:robolectric:4.14.1")
+    testImplementation("androidx.test:core:1.6.1")
+    testImplementation("androidx.test.ext:junit:1.2.1")
 }
