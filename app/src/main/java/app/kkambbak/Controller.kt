@@ -126,9 +126,13 @@ class Controller(private val context: Context) : DriveSession.Listener {
 
     // ------------------------------------------------------------ 엔진 리스너
 
+    /** '자주 놓치는 곳'이 꺼져 있으면 회전 지점 이름·좌표를 지우고 회전 종류와 판정만 저장한다. */
+    private fun forStorage(r: ManeuverResult) = if (settings.storeSpots) r else r.copy(place = "", lat = null, lon = null)
+
     override fun onManeuver(result: ManeuverResult) {
-        store.appendResult(profileId, result)
-        results += result
+        val stored = forStorage(result)
+        store.appendResult(profileId, stored)
+        results += stored
         if (demo.running) demoLog += result
         refreshData()
     }
@@ -139,8 +143,9 @@ class Controller(private val context: Context) : DriveSession.Listener {
 
     override fun onTripEnded(summary: TripSummary) {
         val before = rewards()
-        store.appendTrip(profileId, summary)
-        trips += summary
+        val storedTrip = summary.copy(results = summary.results.map(::forStorage))
+        store.appendTrip(profileId, storedTrip)
+        trips += storedTrip
         val after = rewards()
         val newly = RewardBook.newlyUnlocked(before, after)
         val text = Briefing.trip(summary, newly)

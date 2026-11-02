@@ -49,7 +49,7 @@ object SampleStates {
             weekly = weekly,
             weeklyBriefing = Briefing.weekly(weekly),
             rewards = rewards,
-            settings = SettingsState(preAlert = true, autoBriefing = true),
+            settings = SettingsState(preAlert = true, autoBriefing = true, storeSpots = true),
             sources = listOf(
                 SourceStatus("Vehicle SDK", true, "방향지시등 · 기어 · 브레이크 · 전조등 · 와이퍼"),
                 SourceStatus("NaviHelper SDK", true, "회전 안내(TBT) 수신 중"),

@@ -93,7 +93,7 @@ class Store(context: Context) {
 
     fun settings(p: String) = SettingsState(
         preAlert = prefs.getBoolean("$p.preAlert", false),
-        storeSpots = prefs.getBoolean("$p.storeSpots", false),
+        storeSpots = prefs.getBoolean("$p.storeSpots", p == "demo"), // 실제 운전자는 기본 꺼짐, 시연 운전자는 켜짐
         autoBriefing = prefs.getBoolean("$p.autoBriefing", true),
         altVoice = prefs.getBoolean("$p.altVoice", false),
         nightTheme = prefs.getBoolean("$p.nightTheme", false),

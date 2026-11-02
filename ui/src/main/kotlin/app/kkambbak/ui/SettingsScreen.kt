@@ -42,14 +42,14 @@ fun SettingsScreen(state: UiState, wide: Boolean, onAction: (UiAction) -> Unit) 
                         )
                     }
                 }
-                Text("차를 같이 쓰는 사람마다 기록을 따로 둬요. 다른 운전자의 기록은 보이지 않아요.", style = K.small, color = K.c.text3, modifier = Modifier.padding(top = 8.dp))
+                Text("차를 같이 쓰는 사람마다 기록을 따로 저장해요. 운전자를 바꾸면 그 사람의 기록만 보여요.", style = K.small, color = K.c.text3, modifier = Modifier.padding(top = 8.dp))
                 Spacer(Modifier.height(14.dp))
                 HorizontalDivider(color = K.c.line)
                 ToggleRow("초보 모드 알림음", "회전 지점 35m(고속도로 105m) 앞까지 지시등이 없으면 짧은 알림음을 한 번 울려요.", state.settings.preAlert) { onAction(UiAction.SetPreAlert(it)) }
                 HorizontalDivider(color = K.c.line)
                 ToggleRow("주차 브리핑 자동 재생", "P단에 놓으면 이번 주행 기록을 10초로 읽어 줘요.", state.settings.autoBriefing) { onAction(UiAction.SetAutoBriefing(it)) }
                 HorizontalDivider(color = K.c.line)
-                ToggleRow("자주 놓치는 곳 기억하기", "켜면 판정한 지점의 대략적인 위치(소수 셋째 자리)를 이 차 안에만 저장해요. 기본은 꺼짐.", state.settings.storeSpots) { onAction(UiAction.SetStoreSpots(it)) }
+                ToggleRow("자주 놓치는 곳 기억하기", "켜면 내비가 알려준 회전 지점 이름과 대략적인 위치를 이 차 안에만 저장해요. 끄면 회전 종류와 판정만 남아요. 기본은 꺼짐.", state.settings.storeSpots) { onAction(UiAction.SetStoreSpots(it)) }
             }
         }
     }
@@ -59,9 +59,9 @@ fun SettingsScreen(state: UiState, wide: Boolean, onAction: (UiAction) -> Unit) 
                 SectionTitle("데이터 원칙")
                 listOf(
                     "판정은 모두 차 안에서 끝나요. 서버로 보내는 데이터가 없어요.",
-                    "주행 궤적은 저장하지 않아요. 남는 건 회전별 판정 결과뿐이에요.",
-                    "사고 기록용 60초 버퍼는 메모리에서 계속 덮어쓰고, 기록을 남길 때만 저장해요.",
-                    "보험사 등 제3자에게 점수를 주는 기능은 별도 동의를 받아야만 켤 수 있게 설계했어요(현재 버전에는 없음).",
+                    "주행 궤적은 저장하지 않아요. 평소에는 회전별 판정 결과만 남아요.",
+                    "사고 기록용 60초 버퍼(신호·추정 속도·위치)는 메모리에서 계속 덮어쓰고, 사고 기록을 남길 때만 저장해요.",
+                    "보험사 등 외부에 점수를 주는 기능은 없어요. 도입한다면 별도 동의를 받는 것이 전제예요.",
                 ).forEach { Row(Modifier.padding(vertical = 4.dp)) { Text("·", color = K.c.amber, style = K.body, modifier = Modifier.width(16.dp)); Text(it, style = K.body, color = K.c.text) } }
                 Spacer(Modifier.height(14.dp))
                 HorizontalDivider(color = K.c.line)

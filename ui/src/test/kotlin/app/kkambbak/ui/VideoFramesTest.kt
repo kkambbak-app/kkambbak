@@ -87,7 +87,7 @@ class VideoFramesTest {
         val (hist, histTrips) = DemoScript.history(now)
         val base0 = UiState(
             profileName = "시연 운전자", demoProfile = true, nowMs = now,
-            settings = SettingsState(preAlert = false, autoBriefing = true),
+            settings = SettingsState(preAlert = false, autoBriefing = true, storeSpots = true),
             sources = SampleStates.base().sources,
         )
         fun derived(results: List<ManeuverResult>, trips: List<TripSummary>, today: List<ManeuverResult>, briefing: String?): UiState {

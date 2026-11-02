@@ -100,7 +100,7 @@ object CrashFacts {
         out += if (brakeOn != null) "브레이크: 기록 시점 ${secs(atMs - brakeOn.first)}초 전부터 밟음" else "브레이크: 기록 시점에 밟지 않음"
 
         val peak = snaps.filter { atMs - it.timeMs <= 10_000 }.maxOfOrNull { it.speedKmh } ?: 0.0
-        out += "속도: 직전 10초 최고 약 ${peak.roundToInt()} km/h, 기록 시점 약 ${last.speedKmh.roundToInt()} km/h"
+        out += "속도(위치로 추정): 직전 10초 최고 약 ${peak.roundToInt()} km/h, 기록 시점 약 ${last.speedKmh.roundToInt()} km/h"
         out += "전조등: " + (if (last.lowBeam) "켜짐" else "꺼짐") + " · 와이퍼: " + (if (last.wiper) "작동" else "정지")
         if (last.lat != null && last.lon != null) out += "위치: %.5f, %.5f".format(Locale.US, last.lat, last.lon)
         out += "기록 시각: " + kst(atMs)
